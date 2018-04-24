@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 app = Flask(__name__)
@@ -16,17 +16,19 @@ def index():
 @app.route('/<username>', methods=["GET","POST"])
 def user(username):
     # user starting page, with an encouraging image and a simple form with start button
-    level=1
- 
+    
     if request.method == "POST":
-        return redirect("/"+username+"/"+str(level))
+        level="1"
+        return redirect(url_for('game', username=username, level=level))
+       
     return render_template('user.html', username = username)
 
-@app.route("/<username>/<level>", methods=["GET","POST"])
-def game(username, level):
-    """ The instance game page, where riddles and score will be displayed  """
 
-    """ After clicking submit, the json file is being checked for riddle with specific number, then  
+@app.route("/game/<username>/<level>", methods=["GET","POST"])
+def game(username, level):
+    """ This function creates instance game page, where riddles and score are displayed.
+    After clicking submit, the json file is being checked for riddle with specific number stored as level, then
+    it the data are copied to a 3-element table.
     """
     rlist = []
     with open("data/riddles.json", "r") as json_data:
@@ -38,11 +40,16 @@ def game(username, level):
                 rlist.append(obj["img_source"])
         if request.method == "POST":
             if rlist[1].lower() == request.form["answer"].lower():
-                return render_template("game.html",
-                username=username,
-                level=level+1)
+                """If the level value is still smaller or same as the number of riddle objects - if there are still 
+                any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
+                if int(level) <= len(riddle_data):
+                    
+                    new_level = str(int(level) + 1)
+                    return redirect(url_for('game', username=username, level=new_level))
+                else:
+                    return render_template('user.html', username = username)
             else:
-                flash("<h2>Oops! Wrong! The answer is not<br>{}</h2>".format(request.form["answer"]))
+                flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
                 
     return render_template('game.html',
     riddle_text = rlist[0],
