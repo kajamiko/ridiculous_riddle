@@ -1,22 +1,30 @@
 {% extends 'base.html' %} {% block content %}
 <!--I'd like to put here the riddle text and a funny picture 
-
+../static/img/testimonials-1.jpg
 -->
 
-<div class="col-sm-9">
-  <div class="row">
-  <div class="col-md-6 col-xs-12"><h2>{{ riddle_text }}</h2></div>
-  <div class="col-md-6 col-xs-12"><img src="../static/img/testimonials-1.jpg"></img></div>
+<div class="col-md-10 col-lg-8 mx-auto">
+  <div class="row mb-4">
+  <div class="col-12 col-md-6 mb-2 mb-md-0"><h2>{{ riddle_text }}</h2></div>
+  <div class="col-12 col-md-6"><img class="img-fluid" src="{{ riddle_image }}"></img></div>
   </div>
-</div>
+
+
 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
   <form method="POST">
     <div class="form-row">
       <div class="col-12 col-md-9 mb-2 mb-md-0">
         <input name="answer" type="text" class="form-control form-control-lg" placeholder="Your answer">
       </div>
+       {% with messages = get_flashed_messages() %}
+         {% if messages %}
+         {% for message in messages %}
+              <h2> {{ message }}</h2>
+               {% endfor %}
+        {% endif %}   
+        {% endwith %} 
       <div class="col-12 col-md-3">
-        <button type="submit" class="btn btn-block btn-lg btn-outline-danger">Submit</button>
+        <button type="submit" class="btn btn-block btn-lg btn-warning">Submit</button>
 
       </div>
     </div>
