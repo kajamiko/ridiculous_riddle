@@ -1,10 +1,11 @@
 import os
 import json
+import re
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 app = Flask(__name__)
-app.secret_key = "some_secrets"
+app.secret_key = "ab5t5gdfnmk34322bum"
 
 
 
@@ -12,9 +13,22 @@ app.secret_key = "some_secrets"
 def index():
     """Welcome page with a form to send username and start game"""
     if request.method == "POST":
+        
+       
+        name_exists = False
+        
+        file = open("data/users.txt", "r")
+        for line in file:
+            if request.form["username"] in line:
+                name_exists = True
+                flash("Choose a different username")
+                break
+        file.close() 
         with open("data/users.txt", "a") as file:
-            file.write(request.form["username"], "\n")
-        return redirect(request.form["username"])
+            if name_exists == False:
+
+                file.write(request.form["username"] + "\n")
+                return redirect(request.form["username"])
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
@@ -42,7 +56,7 @@ def user(username, game_over=False):
 def game(username, level):
     """ This function creates instance game page, where riddles are displayed.
     After clicking submit, the json file is being checked for riddle with specific number stored as level, then
-    it the data are copied to a 3-element list.
+    the data are copied to a 3-element list.
     """
     rlist = []
     with open("data/riddles.json", "r") as json_data:
@@ -77,4 +91,5 @@ def game(username, level):
     username=username,
     level=level)       
 
-app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)
+if __name__ == '__main__':
+    app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)
