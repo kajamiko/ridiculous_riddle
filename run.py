@@ -13,7 +13,6 @@ app.secret_key = "ab5t5gdfnmk34322bum"
 def index():
     """Welcome page with a form to send username and start game"""
     if request.method == "POST":
-        
        
         name_exists = False
         
@@ -21,7 +20,7 @@ def index():
         for line in file:
             if request.form["username"] in line:
                 name_exists = True
-                flash("Choose a different username")
+                flash("This name has been used already.")
                 break
         file.close() 
         with open("data/users.txt", "a") as file:
@@ -32,25 +31,16 @@ def index():
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
-def user(username, game_over=False):
+def user(username):
     # user starting page, with an encouraging image and a simple form with start button
     
     if request.method == "POST":
         level="1"
-        return redirect(url_for('game', username=username, level=level))
-    if game_over :
-        """
+        score="0"
+        return redirect(url_for('game', username=username, level=level, score=score))
         
-        """
-        with open("data/users.txt", "r") as file:
-            data = file.readlines()
-            for line in data:
-                words = line.split()
-        return render_template('game_over', username=username, words=words)
     return render_template('user.html', username = username)
     
-
-
 
 @app.route("/game/<username>/<level>", methods=["GET","POST"])
 def game(username, level):
@@ -81,7 +71,8 @@ def game(username, level):
                     new_level = str(int(level) + 1)
                     return redirect(url_for('game', username=username, level=new_level))
                 else:
-                    return render_template('user.html', username = username, game_over=True)
+                    
+                    return redirect(url_for('game_over', username=username))
             else:
                 flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
                 
@@ -91,5 +82,49 @@ def game(username, level):
     username=username,
     level=level)       
 
+
+@app.route('/game_over/<username>/<score>', methods=["GET"])
+def game_over(username, score):
+    """
+
+    This function takes score as parameter, then reads the records file and checks if the score's been higher.
+    If positive, re-writes file with new records (let's say 10).
+    Version 1: just checking if it's writing to a file - fine, works
+    Version 2 : check reading from file
+
+    """
+    #make a dictionary out of the data
+    data = {}
+    data.setdefault(username, score)
+    lb_file = open("data/leaderboard.json", "r")
+    lb_data = json.load(lb_file)
+    lb_file.close()
+    
+    # if there's less than 10 records, dump into the file, whatever the score
+    if(len(lb_data)<6):
+        for name, points in lb_data.items():
+            data[name] = points
+        outfile = open("data/leaderboard.json", "w")
+        json.dump(data, outfile)
+        outfile.close()
+    else:
+    
+        popout = int(min(lb_data.values()))
+        #check if score isn't higher than any of the highest scores so far
+        if int(score) >= popout:
+           # if it is pop the lowest out
+            pop = ""
+            for name, points in lb_data.items():
+                # just in case if there's many users with the same score
+                #make sure only one, random record will be deleted
+                if points == popout:
+                    pop = name
+                data[name] = points
+            del data[pop]
+               
+            with open('data/leaderboard.json', 'w') as outfile:
+                json.dump(data, outfile)
+    return render_template('game_over.html', username=username)
+    
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)
