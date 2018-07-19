@@ -1,21 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container">
+    <div class="row ">
+    <div class="col-xl-9 mx-auto mt-5">
+        <p class="titles aligned-box">Welcome to Riddiculous Riddle, on online quiz checking your Python and Flask skills! Have fun playing!</p>
+        <div class="col-md-6 mx-auto mt-1 align-self-center">
+             <img class="img-fluid img-thumbnail ml-3" style="width:500px" src="../static/img/analysis-blackboard.jpg" alt="Riddle image">
 
-          <div class="col-xl-9 mx-auto">
-         <h1 class="mb-5">Enter your original username and start the game!</h1>
+        </div>
           </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+    </div>
+
+<div class="row">
+          <div class="col-xl-9 mx-auto tiny-con mt-2">
+         <h3 class="titles aligned-box">Enter your unique username and start the game!</h3>
+          </div>
+          
+          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto mt-2">
             <form method="POST" name="username_form" onsubmit="return(validate());">
               <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <div class="col-12 col-md-9 mb-2">
                   <input name="username" type="username" class="form-control form-control-lg" placeholder="Username...">
                 </div>
                 <div class="col-12 col-md-3">
+                 
                   <button type="submit" class="btn btn-block btn-lg btn-primary">Start!</button>
                   
                 </div>
               </div>
             </form>
           </div>
+</div>
 
+</div>
 {% endblock %}
