@@ -3,21 +3,32 @@
 
 -->
 
-<div class="col-sm-9">
-  <div class="row">
-  <div class="col-md-6 col-xs-12"><h2>Hello {{ username }}!<br>Let the game begins...</h2></div>
-  <div class="col-md-6 col-xs-12"><img src="../static/img/testimonials-1.jpg"></img></div>
-  </div>
-</div>
-<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-  <form method="POST">
-    <div class="form-row">
-      <div class="col-12 col-md-3">
+
+  <div class="row align-items-center justify-content-around">
+  <div class="tiny-con col-md-6 col-xs-12"><h2 class="titles">Hello {{ username }}!<br>Let the game begins...</h2>
+    <form method="POST">
+    <div class="form-inline">
         <button type="submit" class="btn btn-block btn-lg btn-danger">Start!</button>
 
-      </div>
+      
     </div>
   </form>
+  
+  </div>
+  <div class="col-md-5 col-xs-12 tiny-con"><img class="img-fluid img-thumbnail" width="400px" src="../static/img/kento-iemoto-625983-unsplash.jpg"></img></div>
+  </div>
+
+<div class="titles aligned-box">
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 </div>
 
 {% endblock %}

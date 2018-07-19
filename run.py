@@ -49,13 +49,12 @@ def game(username, level):
     the data are copied to a 3-element list.
     """
     rlist = []
+    # displaying riddle
     with open("data/riddles.json", "r") as json_data:
         riddle_data = json.load(json_data)
         for obj in riddle_data:
             if obj["level"] == level:
-                """
-                Finds proper riddle
-                """
+                # Finds proper riddle
                 rlist.append(obj["riddle"])
                 rlist.append(obj["answer"])
                 rlist.append(obj["img_source"])
@@ -69,12 +68,13 @@ def game(username, level):
                     any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
                     
                     new_level = str(int(level) + 1)
-                    return redirect(url_for('game', username=username, level=new_level))
+                    return redirect(url_for('game', username=username, level=new_level)) # score = new_score
                 else:
                     
-                    return redirect(url_for('game_over', username=username))
+                    return redirect(url_for('game_over', username=username)) # score = new_score
             else:
                 flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
+                return redirect(url_for('game', username=username, level=new_level)) #score = score
                 
     return render_template('game.html',
     riddle_text = rlist[0],

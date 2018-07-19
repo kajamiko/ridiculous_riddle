@@ -31,6 +31,16 @@
             </form>
           </div>
 </div>
-
+ <div class="row">
+    <div class="col-12 message-box aligned-box titles">
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+         {% for message in messages %}
+               {{ message }}
+               {% endfor %}
+               <p>Please provide a different name, as we don't want to loose your score later on.</p>
+        {% endif %}   
+        {% endwith %} 
+        </div>
 </div>
 {% endblock %}
