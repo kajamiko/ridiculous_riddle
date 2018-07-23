@@ -1,5 +1,7 @@
 {% extends 'base.html' %} 
 
+{% block content %}
+<div style="background-color: white">
 <progress value="0" max="10" min="0" id="progressBar"></progress>
 <input id="countdown" disabled>
 </input>
@@ -9,12 +11,9 @@
 OK, you've scored
 <span id="score"></span>points so far!
 </div>
-{% block content %}
-
-
-
-{% block game_content%}
+</div>
+{% block game_content %}
 {% endblock %}
 
 {% endblock %}
-<script type="text/javascript" src="{{ url_for('static', filename='/js/score_counter.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/score_counter.js')}}"></script>

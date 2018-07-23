@@ -1,3 +1,4 @@
+
 var timeleft = 11;
 var scoreCounter = setInterval(function(){
    timeleft --;
@@ -11,7 +12,7 @@ var scoreCounter = setInterval(function(){
 
 
 function get_my_points(){
-    {{ score }}
+    {{ score }} = {{ score }} + timeleft;
   document.getElementById("score").innerHTML = timeleft;
    clearTimeout(scoreCounter);
    document.getElementById("info").style.display = "inline";
