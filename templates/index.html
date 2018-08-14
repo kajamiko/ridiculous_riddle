@@ -2,8 +2,8 @@
 {% block content %}
 <div class="container">
     <div class="row ">
-    <div class="col-xl-9 mx-auto mt-5">
-        <p class="titles aligned-box">Welcome to Riddiculous Riddle, on online quiz checking your Python and Flask skills! Have fun playing!</p>
+    <div class="col-xl-9 mx-auto mt-2">
+        <div class="aligned-box"><h1 class="rr">Welcome to Riddiculous Riddle</h1><h2 class="titles"> An online quiz checking your Python and Flask skills! Have fun playing!</h2></div>
         <div class="col-md-6 mx-auto mt-1 align-self-center">
              <img class="img-fluid img-thumbnail ml-3" style="width:500px" src="../static/img/analysis-blackboard.jpg" alt="Riddle image">
 
@@ -17,7 +17,7 @@
           </div>
           
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto mt-2">
-            <form method="POST" name="username_form" onsubmit="return(validate());">
+            <form method="POST" name="username_form">
               <div class="form-row">
                 <div class="col-12 col-md-9 mb-2">
                   <input name="username" type="username" class="form-control form-control-lg" placeholder="Username...">

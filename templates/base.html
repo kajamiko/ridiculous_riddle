@@ -2,17 +2,21 @@
 <html>
   <head>
     <title>Riddiculous riddle</title>
+    <link rel="shortcut icon" type="image/png" href="/static/img/worldwide.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-line-icons/css/simple-line-icons.css') }}" type="text/css" />
      <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
   </head>
       <!-- Navigation -->
       <body class="rbody">
-    <nav class="navbar navbar-light bg-light static-top">
+        <div id="wrap">
+    <nav class="navbar navbar-light bg-dark static-top">
       <div class="container">
-        <a class="navbar-brand" href="/">Riddiculous Riddle!</a>
+        <a class="rr" href="/"><h1>Riddiculous Riddle!</h1></a>
         <a class="btn btn-primary" href="#">Homepage</a>
       </div>
     </nav>
@@ -24,20 +28,38 @@
               {% endblock %}
    
     
-</div>
+      </div>
    
       </div>
-      <footer class="footer titles">
-        <div class="container">
-          <h5>The Riddiculous Riddle Game</h5>
-          <div class="row align-items-end justify-content-start">
-           <div class="col-3"><span>Contact</span></div>
-           <div class="col-3"><span>Credits</span></div>
-           <div class="col-3"><span>Join us</span></div>
-          <div class="col-3"><span>Other websites</span></div>
-          <div class="col-4"><p>Created by<br>KajaMiko<br>kajaths@gmail.com</p></div>
-        </div>
+     <footer id="footer" class="navbar-expand-lg">
+      <div class="container">
+       <div class="row justify-content-around">          
+        <div class="col-6">
+        <ul class="list-unstyled">
+          <li><strong>Contact</strong></li>
+          <li>kajaths@gmail.com</li>
+          <li><a href="https://github.com/kajamiko">Github</a></li>
+        </ul>
       </div>
+     
+      <div class="col-6 col">
+        <ul class="list-unstyled">
+          <li><strong>Other Websites</strong></li>
+          <li><a href="https://kajamiko.github.io/fabulous_mr_d/">Fabulous Mr D</a></li>
+          <li>Yummy!</li>
+          <li>Usos Modern</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+    <div  class="col-sm-12">
+        <p class="m-0 text-center text-white">Copyright &copy; Kajamiko 2018</p>
+        <p class="m-0 text-center text-white">Favicon made by <a href="https://www.flaticon.com/authors/freepik" title="Worldwide">Worldwide</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"     title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+        <div>
+      </div>
+    </div>
+      </div>
+    </div> <!-- container -->
     </footer>
    
   
