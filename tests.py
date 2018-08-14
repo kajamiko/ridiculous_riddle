@@ -40,11 +40,11 @@ class TestIntegrations(unittest.TestCase):
         self.assertEqual(resp._status_code, 302)
         
     def test_game_page_for_loading(self):
-        resp = self.app.get('/game/test/2')
+        resp = self.app.get('/game/test/2/0')
         self.assertEqual(resp.status_code, 200)
         
     def test_game_over(self):
-        resp = self.app.get('/game_over/test1/25')
+        resp = self.app.get('/game_over/test1/25/0')
         self.assertEqual(resp.status_code, 200)
         with open("data/leaderboard.json", "r") as lb_file:
             lb_data = json.load(lb_file)

@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.secret_key = "ab5t5gdfnmk34322bum"
 
 
-
 @app.route('/', methods=["GET", "POST"])
 def index():
     """Welcome page with a form to send username and start game"""
@@ -42,13 +41,14 @@ def user(username):
     return render_template('user.html', username = username)
     
 
-@app.route("/game/<username>/<level>", methods=["GET","POST"])
-def game(username, level):
+@app.route("/game/<username>/<level>/<score>", methods=["GET","POST"])
+def game(username, level, score=0):
     """ This function creates instance game page, where riddles are displayed.
     After clicking submit, the json file is being checked for riddle with specific number stored as level, then
     the data are copied to a 3-element list.
     """
     rlist = []
+    
     # displaying riddle
     with open("data/riddles.json", "r") as json_data:
         riddle_data = json.load(json_data)
@@ -59,34 +59,42 @@ def game(username, level):
                 rlist.append(obj["answer"])
                 rlist.append(obj["img_source"])
         if request.method == "POST":
+            
             if rlist[1].lower() == request.form["answer"].lower():
                 """
                 When the answer is correct...
                 """
+                ####################3 experimental code #################################################################################
+                
+                print(request.form)
+                points = request.form['score_getter']
+                #convert all to integer
+                new_score = int(score) + int(points)
                 if int(level) <= len(riddle_data):
                     """If the level value is still smaller or same as the number of riddle objects - if there are still 
                     any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
                     
                     new_level = str(int(level) + 1)
-                    return redirect(url_for('game', username=username, level=new_level)) # score = new_score
+                    return redirect(url_for('game', username=username, level=new_level, score=score)) # score = new_score
                 else:
-                    
-                    return redirect(url_for('game_over', username=username)) # score = new_score
+                    # redirect to the game_over view with leaderboard
+                    return redirect(url_for('game_over', username=username, score=score)) # score = score
             else:
+                # refresh with 
                 flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
-                return redirect(url_for('game', username=username, level=new_level)) #score = score
+                return redirect(url_for('game', username=username, level=level, score=score)) #score = score
                 
     return render_template('game.html',
     riddle_text = rlist[0],
     riddle_image= rlist[2],
     username=username,
-    level=level)       
+    level=level,
+    score=score)       
 
 
 @app.route('/game_over/<username>/<score>', methods=["GET"])
 def game_over(username, score):
     """
-
     This function takes score as parameter, then reads the records file and checks if the score's been higher.
     If positive, re-writes file with new records (let's say 10).
     Version 1: just checking if it's writing to a file - fine, works
