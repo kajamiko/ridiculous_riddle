@@ -75,7 +75,7 @@ def game(username, level, score=0):
                     any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
                     
                     new_level = str(int(level) + 1)
-                    return redirect(url_for('game', username=username, level=new_level, score=score)) # score = new_score
+                    return redirect(url_for('game', username=username, level=new_level, score=new_score)) # score = new_score
                 else:
                     # redirect to the game_over view with leaderboard
                     return redirect(url_for('game_over', username=username, score=score)) # score = score
@@ -116,7 +116,6 @@ def game_over(username, score):
         json.dump(data, outfile)
         outfile.close()
     else:
-    
         popout = int(min(lb_data.values()))
         #check if score isn't higher than any of the highest scores so far
         if int(score) >= popout:
