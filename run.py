@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from collections import OrderedDict
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -70,7 +71,7 @@ def game(username, level, score=0):
                 points = request.form['score_getter']
                 #convert all to integer
                 new_score = int(score) + int(points)
-                if int(level) <= len(riddle_data):
+                if int(level) < len(riddle_data):
                     """If the level value is still smaller or same as the number of riddle objects - if there are still 
                     any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
                     
@@ -95,20 +96,18 @@ def game(username, level, score=0):
 @app.route('/game_over/<username>/<score>', methods=["GET"])
 def game_over(username, score):
     """
-    This function takes score as parameter, then reads the records file and checks if the score's been higher.
-    If positive, re-writes file with new records (let's say 10).
-    Version 1: just checking if it's writing to a file - fine, works
-    Version 2 : check reading from file
-
+    This function takes score as parameter, then reads the records file and checks if the score's been higher then the higest so far.
+    If positive, re-writes file with dictionary containing new record.
+    If there's more then 6, pops out random of the lowest.
+  
     """
     #make a dictionary out of the data
     data = {}
-    data.setdefault(username, score)
+    data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")
     lb_data = json.load(lb_file)
     lb_file.close()
-    
-    # if there's less than 10 records, dump into the file, whatever the score
+    # if there's less than 10 records, write into the file, whatever the score 
     if(len(lb_data)<6):
         for name, points in lb_data.items():
             data[name] = points
@@ -118,20 +117,30 @@ def game_over(username, score):
     else:
         popout = int(min(lb_data.values()))
         #check if score isn't higher than any of the highest scores so far
+        # if it is pop the lowest out
         if int(score) >= popout:
-           # if it is pop the lowest out
             pop = ""
             for name, points in lb_data.items():
                 # just in case if there's many users with the same score
-                #make sure only one, random record will be deleted
+                # make sure only one, random record will be deleted
                 if points == popout:
                     pop = name
-                data[name] = points
+                data[name] = int(points)
             del data[pop]
                
             with open('data/leaderboard.json', 'w') as outfile:
                 json.dump(data, outfile)
-    return render_template('game_over.html', username=username)
+    leaderboard = OrderedDict(sorted(data.items(), key=lambda x: x[1], reverse=True))
+    return render_template('game_over.html', username=username, score=score, leaderboard=leaderboard)
+    
+@app.route('/leaderboard', methods=["GET"])  
+def leaderboard():
+    lb_file = open("data/leaderboard.json", "r")
+    lb_data = json.load(lb_file)
+    lb_file.close()
+    leaderboard = OrderedDict(sorted(lb_data.items(), key=lambda x: x[1], reverse=True))
+    
+    return render_template('show_leaderboard.html', leaderboard=leaderboard)
     
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)

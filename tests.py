@@ -43,7 +43,7 @@ class TestIntegrations(unittest.TestCase):
     
     def test_user_page_for_start(self):
         """
-        FUnction is testing if the correct values are passed to the correct path
+        Function is testing if the correct values are passed to the correct path
         """
         with app.app_context():
             resp = self.app.post('/test')
@@ -59,17 +59,12 @@ class TestIntegrations(unittest.TestCase):
             
     def test_game_page_for_responding(self):
         """
-        Checks if processing data as required
+        Checks if processing data as required and if the correct riddle s being displayed
         """
         with app.app_context():
             resp = self.app.post('/game/test/1/0', data=dict(answer="yes", score_getter="4"))
             self.assertEqual(resp.location, url_for('game', username='test', level='2', score='4', _external=True))
         
-    def test_game_page_for_respoding(self):
-        """
-        This function will post the data with answer etc to see if the next riddle is displaying properly, so - if the whole logic is working
-        """
-        pass
         
     def test_game_over(self):
         """
@@ -83,7 +78,8 @@ class TestIntegrations(unittest.TestCase):
             lb_data = json.load(lb_file)
             self.assertIn("test1", lb_data)
                 
-                
+    def test_leaderboard(self):
+        resp = self.app.get('/leaderboard')
                 
 if __name__ == '__main__':
     

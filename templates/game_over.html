@@ -1,16 +1,14 @@
-{% extends 'base.html' %} {% block content %}
-<!--Username page - Username 
+{% extends 'show_leaderboard.html' %}
 
--->
+{% block game_over %}
 
 <div class="col-sm-9">
   <div class="row">
-  <div class="col-md-6 col-xs-12"><h2>Well done {{ username }}!</div>
+  <div class="col-md-6 col-xs-12"><h2 class="titles">Well done {{ username }}!</div>
   <div class="col-md-6 col-xs-12"><img src="../static/img/testimonials-1.jpg"></img></div>
   </div>
 </div>
 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-{{ score }}
+<h6 class="titles">Congratulations, you've scored {{ score }} points in total</h6>
 </div>
-
 {% endblock %}

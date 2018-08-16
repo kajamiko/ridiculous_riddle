@@ -1,16 +1,22 @@
 {% extends 'base.html' %} {% block content %}
-
+<div><h4 class="rr">Your total score so far is {{ score }}</h4></div>
+<div class="row">
+  <div class="col">
   <progress value="0" max="10" min="0" id="progressBar"></progress>
-    <input type="text" name="countdown" id="countdown" disabled> </input>
+  </div>
+  <div class="col">
+  <input class="form-control-plaintext form-control-lg rr" readonly type="text" name="countdown" id="countdown" disabled> </input>
+  </div>
+</div>
   <div class="row my-5">
   <div class="col-md-6 col-xs-10 media-body my-3">
-    <h5 class="my-3">Media object</h5>
-    <p class="titles"> {{ riddle_text }}</p>
+    <h5 class="my-3 titles">Question nr {{ level }}</h5>
+    <h4  class="titles"> {{ riddle_text }}</h4>
     <div class="align-self-end my-3">
      <div class="mt-3 col-md-8 col-sm-10">
          
         <form method="POST" id="answer_form" onsubmit=" get_my_points();">
-        <input name="answer" type="text" class="form-control form-control-sm" placeholder="Your answer">
+        <input name="answer" type="text" class="form-control form-control-sm" placeholder="Your answer"></input>
       </div>
         <input type="text" name="score_getter" id="score_getter" hidden>
         </input>
@@ -62,7 +68,6 @@ function get_my_points(){
     clearTimeout(scoreCounter);
     document.getElementById("score_getter").value = document.getElementById("countdown").value;
 }   
-
 
 
 </script>
