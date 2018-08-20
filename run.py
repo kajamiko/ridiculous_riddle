@@ -11,7 +11,11 @@ app.secret_key = "ab5t5gdfnmk34322bum"
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    """Welcome page with a form to send username and start game"""
+    """
+    Welcome page with a form to send username and start game.
+    
+    Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
+    """
     if request.method == "POST":
        
         name_exists = False
@@ -46,42 +50,40 @@ def user(username):
 def game(username, level, score=0):
     """ This function creates instance game page, where riddles are displayed.
     After clicking submit, the json file is being checked for riddle with specific number stored as level, then
-    the data are copied to a 3-element list.
+    the data are copied to a 3-elements list.
     """
     rlist = []
+    # loading riddle
+    riddle_file = open("data/riddles.json", "r")
+    riddle_data = json.load(riddle_file)
+    riddle_file.close()
     
-    # displaying riddle
-    with open("data/riddles.json", "r") as json_data:
-        riddle_data = json.load(json_data)
-        for obj in riddle_data:
-            if obj["level"] == level:
-                # Finds proper riddle
-                rlist.append(obj["riddle"])
-                rlist.append(obj["answer"])
-                rlist.append(obj["img_source"])
-        if request.method == "POST":
+    for obj in riddle_data:
+        if obj["level"] == level:
+            # Finds proper riddle
+            rlist.append(obj["riddle"])
+            rlist.append(obj["answer"])
+            rlist.append(obj["img_source"])
             
-            if rlist[1].lower() == request.form["answer"].lower():
-                """
-                When the answer is correct...
-                """
-                ####################3 experimental code #################################################################################
-                
-                print(request.form)
-                points = request.form['score_getter']
-                #convert all to integer
-                new_score = int(score) + int(points)
-                if int(level) < len(riddle_data):
-                    """If the level value is still smaller or same as the number of riddle objects - if there are still 
-                    any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
+    if request.method == "POST":
+        if request.form["answer"].lower() == rlist[1].lower():
+            points = request.form['score_getter']
+            #convert all to integer, just in case
+            new_score = int(score) + int(points)
+            if int(level) < len(riddle_data):
+                """If the level value is still smaller or same as the number of riddle objects - if there are still 
+                any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
                     
-                    new_level = str(int(level) + 1)
-                    return redirect(url_for('game', username=username, level=new_level, score=new_score)) # score = new_score
-                else:
-                    # redirect to the game_over view with leaderboard
-                    return redirect(url_for('game_over', username=username, score=score)) # score = score
+                new_level = str(int(level) + 1)
+                return redirect(url_for('game', username=username, level=new_level, score=new_score)) # score = new_score
             else:
-                # refresh with 
+                # redirect to the game_over view with leaderboard
+                return redirect(url_for('game_over', username=username, score=score)) # score = score
+        else:
+            if request.form["answer"] == "":
+                return redirect(url_for('game', username=username, level=level, score=score)) #score = score
+            else:
+                # if answer is incor refresh with 
                 flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
                 return redirect(url_for('game', username=username, level=level, score=score)) #score = score
                 
