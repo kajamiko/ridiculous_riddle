@@ -29,15 +29,15 @@ def index():
         with open("data/users.txt", "a") as file:
             if name_exists == False:
                 file.write(request.form["username"] + "\n")
-                ################ experimental #####################################
                 session[request.form["username"]] = {}
                 return redirect(request.form["username"])
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
 def user(username):
-    # user starting page, with an encouraging image and a simple form with start button
-    
+    """
+    user starting page, with an encouraging image and a simple form with start button
+    """
     if request.method == "POST":
         level="1"
         score="0"
@@ -72,9 +72,6 @@ def game(username, level, score=0):
             new_score = int(score) + int(points)
             session[username].setdefault(level, points)
             session.modified = True
-            print(session[username][level])
-            for k,v in session[username].items():
-                print("level {0} has value {1}".format(k,v))
             if int(level) < len(riddle_data):
                 """If the level value is still smaller or same as the number of riddle objects - if there are still 
                 any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
