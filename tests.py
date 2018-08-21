@@ -41,7 +41,7 @@ class TestIntegrations(unittest.TestCase):
         self.assertIn("Hello <b>test</b>", str(resp.data))
         self.assertNotIn("Whatever", str(resp.data))
     
-    def test_user_page_for_start(self):
+    def test_user_page_for_loading_and_responding(self):
         """
         Function is testing if the correct values are passed to the correct path
         """
@@ -59,7 +59,7 @@ class TestIntegrations(unittest.TestCase):
             
     def test_game_page_for_responding(self):
         """
-        Checks if processing data as required and if the correct riddle s being displayed
+        Checks if processing data as required and if the correct riddle is being displayed
         """
         with app.app_context():
             resp = self.app.post('/game/test/1/0', data=dict(answer="yes", score_getter="4"))
@@ -80,6 +80,9 @@ class TestIntegrations(unittest.TestCase):
                 
     def test_leaderboard(self):
         resp = self.app.get('/leaderboard')
+        self.assertIn("6 highest scores", str(resp.data))
+        self.assertNotIn("4 pink unicorns", str(resp.data))
+        print(str(resp.data))
                 
 if __name__ == '__main__':
     

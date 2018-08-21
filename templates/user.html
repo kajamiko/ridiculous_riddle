@@ -1,15 +1,20 @@
 {% extends 'base.html' %} {% block content %}
-<!--Username page - Username 
-
--->
-
 
   <div class="row align-items-center justify-content-around">
-  <div class="tiny-con col-md-6 col-xs-12"><h2 class="titles aligned-box">Hello <b>{{ username }}</b>!<br>Let the game begin...</h2>
+  <div class="tiny-con col-md-6 col-xs-12"><h2 class="titles aligned-box">Hello <b>{{ username }}</b>!<br>Let the game begins...</h2>
+  <div>
+    
+    <p class="rr"> Now, you'll get a set of 10 questions to answer. 
+    Your time to answer is unlimited, however, if you wish to get more points,
+    try to do so in 10 seconds. The progress bar at the top of the page and the
+    info will countdown to 0.
+    You get no hints.
+    Yes, it is possible to cheat with scoring :p
+    Have fun!</p>
+  </div>
     <form method="POST">
     <div class="form-inline">
         <button type="submit" class="btn btn-block btn-lg btn-danger">Start!</button>
-
       
     </div>
   </form>

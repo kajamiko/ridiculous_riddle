@@ -2,18 +2,18 @@ import os
 import json
 import re
 from collections import OrderedDict
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 
 
 app = Flask(__name__)
 app.secret_key = "ab5t5gdfnmk34322bum"
 
 
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     """
     Welcome page with a form to send username and start game.
-    
     Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
     """
     if request.method == "POST":
@@ -29,8 +29,9 @@ def index():
         file.close() 
         with open("data/users.txt", "a") as file:
             if name_exists == False:
-
                 file.write(request.form["username"] + "\n")
+                ################ experimental #####################################
+                session[request.form["username"]] = {}
                 return redirect(request.form["username"])
     return render_template('index.html')
     
@@ -69,7 +70,10 @@ def game(username, level, score=0):
         if request.form["answer"].lower() == rlist[1].lower():
             points = request.form['score_getter']
             #convert all to integer, just in case
+            print(request.form)
             new_score = int(score) + int(points)
+            ################# experimental
+            session[username][level] = points
             if int(level) < len(riddle_data):
                 """If the level value is still smaller or same as the number of riddle objects - if there are still 
                 any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
@@ -103,7 +107,7 @@ def game_over(username, score):
     If there's more then 6, pops out random of the lowest.
   
     """
-    #make a dictionary out of the data
+    # puts data into dictionary
     data = {}
     data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")

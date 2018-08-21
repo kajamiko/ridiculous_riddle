@@ -10,14 +10,16 @@
      <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
   </head>
       <!-- Navigation -->
       <body class="rbody">
         <div id="wrap">
     <nav class="navbar navbar-light bg-dark static-top">
       <div class="container">
-        <a class="rr" href="/"><h1>Ridiculous Riddle!</h1></a>
-        <a class="btn btn-primary" href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        <a class="rr" href="/"><h1>Ridiculous Riddle</h1></a>
+        <a class="btn btn-primary" href="{{ url_for('leaderboard') }}"><span class="fas fa-trophy"> Leaderboard</a>
       </div>
     </nav>
    
@@ -66,5 +68,7 @@
 
       <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    
+<script type="text/javascript" src="{{ url_for('static', filename='js/index_validates.js') }}"></script>
     </body>
 </html>

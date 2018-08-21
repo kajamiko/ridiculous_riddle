@@ -1,19 +1,14 @@
 
-var timeleft = 11;
+ 
+ var timeleft = 10;
 var scoreCounter = setInterval(function(){
    timeleft --;
   if(timeleft >= 0){
     document.getElementById("progressBar").value = timeleft;
-    document.getElementById("countdown").value = timeleft;
+    document.getElementById("score_getter").value = timeleft;
+    document.getElementById("countdown").innerHTML = timeleft;
   }
   if(timeleft < 0)
-    clearInterval(downloadTimer);
+    clearInterval(scoreCounter);
 },1000);
 
-
-function get_my_points(){
-    {{ score }} = {{ score }} + timeleft;
-  document.getElementById("score").innerHTML = timeleft;
-   clearTimeout(scoreCounter);
-   document.getElementById("info").style.display = "inline";
-}

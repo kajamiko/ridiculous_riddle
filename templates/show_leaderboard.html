@@ -3,18 +3,18 @@
 
 {% block game_over %}
 {% endblock %}
-<div class="container">
+<div class="container my-3">
     <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
     <table class="table table-dark table-responsive">
         <thead>
             <tr>
-        <th scope="col" class="rr">Leaderboard</th>
+        <th scope="col text-center" class="rr">6 highest scores</th>
         </tr>
         </thead>
     {% for name, points in leaderboard.items() %}
     <tr>
-    <td>{{ name }} </td>
-    <td> {{ points }}</td>
+    <td class="col-sm-6">{{ name }} </td>
+    <td class="col-sm-6"> {{ points }}</td>
     </tr>
     {% endfor %}
     </table>
