@@ -8,7 +8,7 @@ On each question page, it counts down points for user to score, from 10 downward
  
 ## UX
  
-Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
+Website is created for everyone looking to check they're coding knowledge
 
 In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
 - As a user type, I want to perform an action, so that I can achieve a goal.

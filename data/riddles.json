@@ -5,9 +5,9 @@
     "level": "1"
 },
 {
-    "riddle": "Are semicolons used in python?",
+    "riddle": "Suppose a list with name test, contains 10 elements. You can get the 5th element from the test list using:",
     "img_source": "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738",
-    "answer": "No",
+    "answer": "test[4]",
     "level": "2"
 },
 {

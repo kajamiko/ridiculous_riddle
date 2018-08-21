@@ -9,7 +9,6 @@ app = Flask(__name__)
 app.secret_key = "ab5t5gdfnmk34322bum"
 
 
-
 @app.route('/', methods=["GET", "POST"])
 def index():
     """
@@ -107,11 +106,11 @@ def game_over(username, score):
     This function takes score as parameter, then reads the records file and checks if the score's been higher then the higest so far.
     If positive, re-writes file with dictionary containing new record.
     If there's more then 6, pops out random of the lowest.
+    Also passes overall score stored in session to the template.
   
     """
     # puts data into dictionary
     data = {}
-    
     data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")
     lb_data = json.load(lb_file)
@@ -139,11 +138,14 @@ def game_over(username, score):
                
             with open('data/leaderboard.json', 'w') as outfile:
                 json.dump(data, outfile)
-    scoring = session[username]
+    scoring = OrderedDict(sorted(session[username].items()))
     return render_template('game_over.html', username=username, score=score, scoring=scoring)
     
 @app.route('/leaderboard', methods=["GET"])  
 def leaderboard():
+    """
+    Displays leaderboard read from leaderboard.json.
+    """
     lb_file = open("data/leaderboard.json", "r")
     lb_data = json.load(lb_file)
     lb_file.close()
