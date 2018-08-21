@@ -71,7 +71,6 @@ def game(username, level, score=0):
             points = request.form['score_getter']
             #convert all to integer, just in case
             new_score = int(score) + int(points)
-            ################# experimental code ##############################
             session[username].setdefault(level, points)
             session.modified = True
             print(session[username][level])
