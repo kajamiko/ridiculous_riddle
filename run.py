@@ -70,10 +70,13 @@ def game(username, level, score=0):
         if request.form["answer"].lower() == rlist[1].lower():
             points = request.form['score_getter']
             #convert all to integer, just in case
-            print(request.form)
             new_score = int(score) + int(points)
-            ################# experimental
-            session[username][level] = points
+            ################# experimental code ##############################
+            session[username].setdefault(level, points)
+            session.modified = True
+            print(session[username][level])
+            for k,v in session[username].items():
+                print("level {0} has value {1}".format(k,v))
             if int(level) < len(riddle_data):
                 """If the level value is still smaller or same as the number of riddle objects - if there are still 
                 any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
@@ -109,6 +112,7 @@ def game_over(username, score):
     """
     # puts data into dictionary
     data = {}
+    
     data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")
     lb_data = json.load(lb_file)
@@ -136,8 +140,8 @@ def game_over(username, score):
                
             with open('data/leaderboard.json', 'w') as outfile:
                 json.dump(data, outfile)
-    leaderboard = OrderedDict(sorted(data.items(), key=lambda x: x[1], reverse=True))
-    return render_template('game_over.html', username=username, score=score, leaderboard=leaderboard)
+    scoring = session[username]
+    return render_template('game_over.html', username=username, score=score, scoring=scoring)
     
 @app.route('/leaderboard', methods=["GET"])  
 def leaderboard():

@@ -1,5 +1,5 @@
 
- 
+
  var timeleft = 10;
 var scoreCounter = setInterval(function(){
    timeleft --;
