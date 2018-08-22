@@ -6,15 +6,18 @@ from flask import Flask, render_template, request, redirect, flash, url_for, ses
 
 
 app = Flask(__name__)
-app.secret_key = "ab5t5gdfnmk34322bum"
+app.secret_key = "az#5t];a5g,dfnmk34;322bum"
 
 def count_highest(username):
     highest = 0
-    if session[username]:
-        for v in session[username].values():
-            highest += int(v)
-    else:
-        pass
+    try:
+        if session[username]:
+            for v in session[username].values():
+                highest += int(v)
+        else:
+            pass
+    except(KeyError):
+        abort(410)
     return highest
 
 @app.route('/', methods=["GET", "POST"])
@@ -23,9 +26,19 @@ def index():
     Welcome page with a form to send username and start game.
     Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
     """
+    
     if request.method == "POST":
         if len(request.form["username"]) >= 4:
-             return redirect(url_for('user', username=request.form["username"]))
+            file = open("data/banned_users.txt", "r")
+            for line in file:
+                if request.form["username"] in line:
+                    flash("This user is banned. Choose another username :p")
+                    
+                    file.close()
+                    break
+                else:
+                    file.close()
+                    return redirect(url_for('user', username=request.form["username"])) 
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
@@ -51,7 +64,7 @@ def game(username, level, score=0):
     """
     
     if int(score) > count_highest(username):
-        return redirect(url_for('ban', username=username))
+        return redirect(url_for('forbidden', username=username))
     
     rlist = []
     # loading riddle
@@ -81,7 +94,7 @@ def game(username, level, score=0):
                 return redirect(url_for('game', username=username, level=new_level, score=new_score)) # score = new_score
             else:
                 # redirect to the game_over view with leaderboard
-                return redirect(url_for('game_over', username=username, score=score)) # score = score
+                return redirect(url_for('game_over', username=username, score=new_score)) # score = score
         else:
             if request.form["answer"] == "":
                 return redirect(url_for('game', username=username, level=level, score=score)) #score = score
@@ -108,6 +121,8 @@ def game_over(username, score):
   
     """
     # puts data into dictionary
+    if int(score) != count_highest(username):
+        return redirect(url_for('forbidden', username=username))
     data = {}
     data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")
@@ -151,28 +166,48 @@ def leaderboard():
     
     return render_template('show_leaderboard.html', leaderboard=leaderboard)
     
-@app.route('/cheating_ban/<username>')
-def ban(username):
-    
-    int_level = max([int(s) for s in session[username].keys()])
-    level = str(int_level)
-    print(level)
-    score = count_highest(username)
-    print(score)
+@app.route('/cheating_warning/<username>')
+def forbidden(username):
+    """
+    Warning & fixing page, if a user is unkind enough to cheat on scoring
+    """
+    try:
+        int_level = max([int(s) for s in session[username].keys()])
+        level = str(int_level)
+        score = count_highest(username)
+    except(KeyError):
+        abort(410)
     return render_template('ban.html', username=username, level=level, score=score)
+
+@app.route('/ban_me/<username>')
+def ban(username):
+    """
+    This function puts username on the black list
+    """
+    with open("data/banned_users.txt", "a") as file:
+                file.write(username + "\n")
+    return redirect(url_for('index'))
     
 @app.route('/restart/<username>')
 def restart(username):
+    """
+    Session cleaning function
+    """
     try:
         session.pop(username)
     except(KeyError):
         abort(410)
     return redirect(url_for('index'))
     
-    
 @app.errorhandler(410)
-def page_gone():
-    message = "You can see this page, because you probably choose to reset user data."
-    return render_template('error.html', message=message)
+@app.errorhandler(404)
+@app.errorhandler(500)
+def page_gone(self):
+    """
+    View displaying custom error page
+    """
+    return render_template('error.html')
+    
+    
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)

@@ -13,19 +13,34 @@ Website is created for everyone looking to check they're coding knowledge
 In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
 - As a user type, I want to perform an action, so that I can achieve a goal.
 
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
+This section is also where you would share links to any wireframes, mockups, diagrams etc.
 
 ## Features
 
-In this section, you should go over the different parts of your project, and describe each in a sentence or so.
+Index page - welcomes user and allows him to choose a username.
+
+Next page is a user page, describing shortly app's functionality.
+
+Game page, where all the magic happens.
+
+End of the game page, showing detailed scoring.
+
+Leaderboard is a page displaying 6 best results.
+
+Cheating prevention page is showing only if user enters unallowed values in the browser bar.
+
+Error page may happen to be displayed, as the app's functionality relies on session cookie.
  
 ### Existing Features
-- Feature 1 - allows users X to achieve Y, by having them fill out Z
-- ...
 
-For some/all of your features, you may choose to reference the specific project files that implement them, although this is entirely optional.
 
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
+1. Index page - user can choose username, that is posted to the next view, or rejected if user is on the banned users list.
+
+2. User page - shows a paragraph describing game's functionality, but under the bonnet it is also initializing important user data, which are level, score and session dictionary.
+
+3. The actual game function is reading proper question from file ('static/data/riddles.json'). It put the data ( question, answer, image source and level number) into a python list, that is later passed to a template to parse.
+ 
+
 
 ### Features Left to Implement
 - Another feature idea

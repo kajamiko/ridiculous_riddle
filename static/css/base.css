@@ -23,9 +23,9 @@ html {
 	 text-align: center;
 	 width: 100%;
 	 bottom: 0;
+	 font-size: 0.7em;
 }
 #footer a{
-  
   color:  #41FF00;
 }
 .titles{
@@ -49,3 +49,4 @@ html {
 .message-box{
   height: 60px;
 }
+

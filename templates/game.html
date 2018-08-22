@@ -59,6 +59,8 @@
           {% endif %}
           {% if level|int < 3 %}
           <a class="btn btn-outline-warning" href="{{ url_for('game', username=username, level=level|int+1, score=score)}}">Forward</a>
+          {% else %}
+          <a class="btn btn-outline-warning" href="{{ url_for('game_over', username=username, score=score)}}">Your certificate</a>
           {% endif %}
           <div class="row my-3">
           <a class="btn btn-outline-danger" href="{{ url_for('restart', username=username) }}">Restart...</a>
