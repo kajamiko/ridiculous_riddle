@@ -2,12 +2,20 @@ import os
 import json
 import re
 from collections import OrderedDict
-from flask import Flask, render_template, request, redirect, flash, url_for, session
+from flask import Flask, render_template, request, redirect, flash, url_for, session, abort
 
 
 app = Flask(__name__)
 app.secret_key = "ab5t5gdfnmk34322bum"
 
+def count_highest(username):
+    highest = 0
+    if session[username]:
+        for v in session[username].values():
+            highest += int(v)
+    else:
+        pass
+    return highest
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -16,21 +24,8 @@ def index():
     Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
     """
     if request.method == "POST":
-       
-        name_exists = False
-        
-        file = open("data/users.txt", "r")
-        for line in file:
-            if request.form["username"] in line:
-                name_exists = True
-                flash("This name has been used already.")
-                break
-        file.close() 
-        with open("data/users.txt", "a") as file:
-            if name_exists == False:
-                file.write(request.form["username"] + "\n")
-                session[request.form["username"]] = {}
-                return redirect(request.form["username"])
+        if len(request.form["username"]) >= 4:
+             return redirect(url_for('user', username=request.form["username"]))
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
@@ -41,6 +36,8 @@ def user(username):
     if request.method == "POST":
         level="1"
         score="0"
+        session[username] = {}
+        session.modified = True
         return redirect(url_for('game', username=username, level=level, score=score))
         
     return render_template('user.html', username = username)
@@ -52,6 +49,10 @@ def game(username, level, score=0):
     After clicking submit, the json file is being checked for riddle with specific number stored as level, then
     the data are copied to a 3-elements list.
     """
+    
+    if int(score) > count_highest(username):
+        return redirect(url_for('ban', username=username))
+    
     rlist = []
     # loading riddle
     riddle_file = open("data/riddles.json", "r")
@@ -150,5 +151,28 @@ def leaderboard():
     
     return render_template('show_leaderboard.html', leaderboard=leaderboard)
     
+@app.route('/cheating_ban/<username>')
+def ban(username):
+    
+    int_level = max([int(s) for s in session[username].keys()])
+    level = str(int_level)
+    print(level)
+    score = count_highest(username)
+    print(score)
+    return render_template('ban.html', username=username, level=level, score=score)
+    
+@app.route('/restart/<username>')
+def restart(username):
+    try:
+        session.pop(username)
+    except(KeyError):
+        abort(410)
+    return redirect(url_for('index'))
+    
+    
+@app.errorhandler(410)
+def page_gone():
+    message = "You can see this page, because you probably choose to reset user data."
+    return render_template('error.html', message=message)
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'), port=(int(os.getenv('PORT'))), debug=True)

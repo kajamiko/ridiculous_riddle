@@ -1,0 +1,6 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1 class="titles">Hey {{ username }}, do you want to get banned for cheating? </h1>
+<a class="btn btn-outline-success" href="{{ url_for('game', username=username, level=level, score=score)}}">Nope, I'm sorry</a> <a class="btn btn-outline-warning" href="/">Go ahead</a>
+
+{% endblock %}

@@ -6,8 +6,9 @@
   <div class="col-md-10 col-lg-8 col-xl-7 mx-auto"><h2 class="titles text-center">Well done {{ username }}!</div>
   </div>
 
-<div class="col-md-10 col-lg-10 col-xl-10 mx-auto my-2">
+<div class="col-md-10 col-lg-10 col-xl-10 mx-auto my-2 " align="center">
 <h6 class="titles text-center">Congratulations, you've scored {{ score }} points in total</h6>
+<a class="btn btn-outline-danger" href="{{ url_for('restart', username=username) }}">Restart...</a>
 </div>
 
 
