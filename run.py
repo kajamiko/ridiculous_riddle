@@ -18,21 +18,7 @@ def index():
     """
     if request.method == "POST":
        
-        name_exists = False
-        
-        file = open("data/users.txt", "r")
-        for line in file:
-            if request.form["username"] in line:
-                name_exists = True
-                flash("This name has been used already.")
-                break
-        file.close() 
-        with open("data/users.txt", "a") as file:
-            if name_exists == False:
-                file.write(request.form["username"] + "\n")
-                ################ experimental #####################################
-                session[request.form["username"]] = {}
-                return redirect(request.form["username"])
+        return redirect(request.form["username"])
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
@@ -71,11 +57,6 @@ def game(username, level, score=0):
             points = request.form['score_getter']
             #convert all to integer, just in case
             new_score = int(score) + int(points)
-            session[username].setdefault(level, points)
-            session.modified = True
-            print(session[username][level])
-            for k,v in session[username].items():
-                print("level {0} has value {1}".format(k,v))
             if int(level) < len(riddle_data):
                 """If the level value is still smaller or same as the number of riddle objects - if there are still 
                 any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
@@ -139,7 +120,7 @@ def game_over(username, score):
                
             with open('data/leaderboard.json', 'w') as outfile:
                 json.dump(data, outfile)
-    scoring = session[username]
+    scoring = data
     return render_template('game_over.html', username=username, score=score, scoring=scoring)
     
 @app.route('/leaderboard', methods=["GET"])  

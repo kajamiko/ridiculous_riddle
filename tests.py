@@ -20,17 +20,6 @@ class TestIntegrations(unittest.TestCase):
     def test_homepage_post(self):
         resp = self.app.post('/', data=dict(username="test"))
         self.assertEqual(resp.status_code, 302)
-        # now it won't work because the name is in file already
-        resp2 = self.app.post('/', data=dict(username="test"))
-        self.assertEqual(resp2.status_code, 200)
-        #self.assertIn("This name has been used already.", str(resp2.data))
-        resp = self.app.post('/', data=dict(username="test2"))
-        self.assertEqual(resp._status_code, 302)
-        resp2 = self.app.post('/', data=dict(username="test2"))
-        self.assertEqual(resp2.status_code, 200)
-        # delete data file content
-        open('data/users.txt', 'w').close()
-        
        
     def test_user_page(self):
         """
@@ -80,9 +69,8 @@ class TestIntegrations(unittest.TestCase):
                 
     def test_leaderboard(self):
         resp = self.app.get('/leaderboard')
-        self.assertIn("6 highest scores", str(resp.data))
+        self.assertIn("Leaderboard", str(resp.data))
         self.assertNotIn("4 pink unicorns", str(resp.data))
-        print(str(resp.data))
                 
 if __name__ == '__main__':
     
