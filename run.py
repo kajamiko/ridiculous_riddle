@@ -2,7 +2,7 @@ import os
 import json
 import re
 from collections import OrderedDict
-from flask import Flask, render_template, request, redirect, flash, url_for, session
+from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 app = Flask(__name__)
