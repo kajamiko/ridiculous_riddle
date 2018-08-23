@@ -5,7 +5,9 @@
   </div>
 <div class="col-md-12 col-lg-12 col-xl-12 mx-auto my-2 " align="center">
 <h2 class="titles">Hey {{ username }}, do you want to get banned for cheating? </h2>
+<div class="col-xs-12 col-md-6 col-lg-6">
 <a class="btn btn-outline-success" href="{{ url_for('game', username=username, level=level, score=score)}}">Nope, I'm sorry</a>
-<a class="btn btn-outline-warning" href="{{ url_for('ban', username=username)}}">Go ahead</a>
+<p> You'll be redirected to the last question you didn't cheat on</p>
 </div>
+
 {% endblock %}

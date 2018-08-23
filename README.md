@@ -34,23 +34,46 @@ Error page may happen to be displayed, as the app's functionality relies on sess
 ### Existing Features
 
 
-1. Index page - user can choose username, that is posted to the next view, or rejected if user is on the banned users list.
+1. Index page - user can choose username, that is posted to the next view, or rejected if user is on the banned users list. It laso has basic validation, both javascript-based and in the back-end.
 
 2. User page - shows a paragraph describing game's functionality, but under the bonnet it is also initializing important user data, which are level, score and session dictionary.
 
-3. The actual game function is reading proper question from file ('static/data/riddles.json'). It put the data ( question, answer, image source and level number) into a python list, that is later passed to a template to parse.
- 
+3. Game [python part] - is reading proper question from file ('static/data/riddles.json'). It puts the data ( question, answer, image source and level number) into a python list, that is later passed to a template to parse.
+After user submits answer, it is checking if it's correct.
+The function is also processing initial score, and adding new points that are posted along with the answer. Points earned for each level are stored in session. If points argument doesn't match expectations, it redirects to another view.
+If there is no more questions left in the riddles.json file, page is redirected to the 'game_over' function.
 
+4. Game [javascript part] - javascript function in ('static/js/score_counter.js') is counting down time for user to answer. Page may be reloaded when a wrong answer is submitted, and in this case user has another chance to answer.
 
-### Features Left to Implement
-- Another feature idea
+5. End of the game feature - it checks the overall score again, including redirecting if cheated, and then, if it's one of the highest so far, writes it in the leaderboard file.
+
+6. Leaderboard page is displaying the content of the leaderboard.json file.
+
+7. Cheating prevention feature - if the app detects some inconsistency in scoring, it redirects to a separate page, where user is offered to choose either go back to where he was, or to get to the banned users list.
+
+8. Restarting feature - it simply clears session from particular user's data. 
+
+9. Error handling - in case of an error, it displays custom page. 
+
 
 ## Technologies Used
 
 In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
+- HTML and CSS
+    - project uses **HTML** and **CSS** to build webpages.
+-  [Bootstrap](https://getbootstrap.com/)
+    -project uses **Bootstrap** for webpages' layout.
+- [Javascript](https://www.javascript.com/) 
+    -The project uses **Javascript** to enhance pages functionality.
 - [JQuery](https://jquery.com)
-    - The project uses **JQuery** to simplify DOM manipulation.
+    - The project is using Bootstrap's **JQuery** for responsiveness.
+- [JSON](https://www.json.org/)
+- [Python](https://www.python.org/)
+    - The project's back-end was written in **Python** .
+- [Flask](http://flask.pocoo.org/)
+    - project was built **flask** microframework due to its simplicity.
+
 
 
 ## Testing
@@ -62,6 +85,8 @@ Whenever it is feasible, prefer to automate your tests, and if you've done so, p
 For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
 
 The back end has been tested thoroughly using unitttest. I have tested views to see if functions give desired results.
+
+M
 
 1. Contact form:
     1. Go to the "Contact Us" page
@@ -90,10 +115,10 @@ In addition, if it is not obvious, you should also describe how to run your code
 ## Credits
 
 ### Content
-- The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z)
+- The text for section Y was copied from the [Wikipedia article Z](ht
 
 ### Media
-- The photos used in this site were obtained from ...
+- The photos used in this site were obtained from [Pixabay](https://pixabay.com/)
 
 ### Acknowledgements
 

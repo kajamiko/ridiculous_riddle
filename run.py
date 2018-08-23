@@ -1,6 +1,5 @@
 import os
 import json
-import re
 from collections import OrderedDict
 from flask import Flask, render_template, request, redirect, flash, url_for, session, abort
 
@@ -24,21 +23,16 @@ def count_highest(username):
 def index():
     """
     Welcome page with a form to send username and start game.
-    Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
+    Function also checks for username in banned_users.txt.
     """
     
     if request.method == "POST":
         if len(request.form["username"]) >= 4:
-            file = open("data/banned_users.txt", "r")
-            for line in file:
-                if request.form["username"] in line:
-                    flash("This user is banned. Choose another username :p")
-                    
-                    file.close()
-                    break
-                else:
-                    file.close()
-                    return redirect(url_for('user', username=request.form["username"])) 
+            
+            return redirect(url_for('user', username=request.form["username"]))
+        else:
+            flash('Username has to be longer than 3 characters!')
+            redirect(url_for('index'))
     return render_template('index.html')
     
 @app.route('/<username>', methods=["GET","POST"])
@@ -64,7 +58,7 @@ def game(username, level, score=0):
     """
     
     if int(score) > count_highest(username):
-        return redirect(url_for('forbidden', username=username))
+        return redirect(url_for('cheating_prevent', username=username))
     
     rlist = []
     # loading riddle
@@ -122,7 +116,7 @@ def game_over(username, score):
     """
     # puts data into dictionary
     if int(score) != count_highest(username):
-        return redirect(url_for('forbidden', username=username))
+        return redirect(url_for('cheating_prevent', username=username))
     data = {}
     data.setdefault(username, int(score))
     lb_file = open("data/leaderboard.json", "r")
@@ -167,7 +161,7 @@ def leaderboard():
     return render_template('show_leaderboard.html', leaderboard=leaderboard)
     
 @app.route('/cheating_warning/<username>')
-def forbidden(username):
+def cheating_prevent(username):
     """
     Warning & fixing page, if a user is unkind enough to cheat on scoring
     """
@@ -179,14 +173,6 @@ def forbidden(username):
         abort(410)
     return render_template('ban.html', username=username, level=level, score=score)
 
-@app.route('/ban_me/<username>')
-def ban(username):
-    """
-    This function puts username on the black list
-    """
-    with open("data/banned_users.txt", "a") as file:
-                file.write(username + "\n")
-    return redirect(url_for('index'))
     
 @app.route('/restart/<username>')
 def restart(username):
