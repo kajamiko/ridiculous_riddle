@@ -34,7 +34,7 @@ Error page may happen to be displayed, as the app's functionality relies on sess
 ### Existing Features
 
 
-1. Index page - user can choose username, that is posted to the next view, or rejected if user is on the banned users list. It laso has basic validation, both javascript-based and in the back-end.
+1. Index page - user can choose username, that is posted to the next view. It also has basic validation, both javascript-based and in the back-end.
 
 2. User page - shows a paragraph describing game's functionality, but under the bonnet it is also initializing important user data, which are level, score and session dictionary.
 
@@ -49,12 +49,15 @@ If there is no more questions left in the riddles.json file, page is redirected 
 
 6. Leaderboard page is displaying the content of the leaderboard.json file.
 
-7. Cheating prevention feature - if the app detects some inconsistency in scoring, it redirects to a separate page, where user is offered to choose either go back to where he was, or to get to the banned users list.
+7. Cheating prevention feature - if the app detects some inconsistency in scoring, it redirects to a separate page, where user is offered to choose either go back to where he was.
 
 8. Restarting feature - it simply clears session from particular user's data. 
 
 9. Error handling - in case of an error, it displays custom page. 
 
+### Features removed
+
+There was also a possibility of putting username on a banned users list, but it was impractical.
 
 ## Technologies Used
 

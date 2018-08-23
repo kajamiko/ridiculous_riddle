@@ -163,7 +163,8 @@ def leaderboard():
 @app.route('/cheating_warning/<username>')
 def cheating_prevent(username):
     """
-    Warning & fixing page, if a user is unkind enough to cheat on scoring
+    Warning & fixing page, if a user is unkind enough to cheat on scoring.
+    It gets an actual user's score and redirects back to the most recent question page
     """
     try:
         int_level = max([int(s) for s in session[username].keys()])
