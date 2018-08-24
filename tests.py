@@ -17,6 +17,7 @@ class TestIntegrations(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         
         
+        
     def test_homepage_post(self):
         resp = self.app.post('/', data=dict(username="test"))
         self.assertEqual(resp.status_code, 302)

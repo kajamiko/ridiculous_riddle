@@ -2,7 +2,7 @@ import os
 import json
 import re
 from collections import OrderedDict
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, session
 
 
 app = Flask(__name__)
@@ -17,7 +17,11 @@ def index():
     Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
     """
     if request.method == "POST":
-       
+        session["username"] = {}
+        
+        session.modified = True
+        session["username"]["whatever"] = 12
+        session.modified = True
         return redirect(request.form["username"])
     return render_template('index.html')
     
