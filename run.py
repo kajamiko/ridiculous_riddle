@@ -17,11 +17,8 @@ def index():
     Function also checks for username in users.txt, just to avoid overwriting data in the leaderboard
     """
     if request.method == "POST":
-        session["username"] = {}
         
-        session.modified = True
-        session["username"]["whatever"] = 12
-        session.modified = True
+
         return redirect(request.form["username"])
     return render_template('index.html')
     
@@ -76,7 +73,7 @@ def game(username, level, score=0):
             else:
                 # if answer is incor refresh with 
                 flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
-                return redirect(url_for('game', username=username, level=level, score=score)) #score = score
+                return redirect(url_for('game', username=username, level=level)) #score = score
                 
     return render_template('game.html',
     riddle_text = rlist[0],

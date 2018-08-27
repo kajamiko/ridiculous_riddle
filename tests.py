@@ -1,8 +1,10 @@
 import os
 from flask import url_for
+from flask import session
 from run import app
 import unittest
 import json
+from unittest.mock import patch
 
 
 class TestIntegrations(unittest.TestCase):
@@ -10,17 +12,18 @@ class TestIntegrations(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         # needs a SERVER_NAME to run with app context
+        self.app.application.config["SECRET_KEY"] = 'fvnfkjbnfkjbn'
         self.app.application.config["SERVER_NAME"] = "{0} {1}".format(os.environ.get('PORT'), os.environ.get('IP'))
 
-    def test_homepage(self):
-        resp = self.app.get('/')
-        self.assertEqual(resp.status_code, 200)
-        
-        
         
     def test_homepage_post(self):
-        resp = self.app.post('/', data=dict(username="test"))
-        self.assertEqual(resp.status_code, 302)
+            with app.app_context():
+                resp0 = self.app.get("/game/test/1")
+                self.assertTrue(resp0 is not None)
+                print(resp0.status_code)
+                resp = self.app.post("/game/test/2/3", data=dict(answer='no', score_getter='3'))
+                self.assertTrue(resp is not None)
+
        
     def test_user_page(self):
         """
@@ -44,7 +47,8 @@ class TestIntegrations(unittest.TestCase):
         """
         Checks if loading properly 
         """
-        resp = self.app.get('/game/test/1/0')
+        
+        resp = self.app.get('/game/test/1/1')
         self.assertEqual(resp.status_code, 200)
             
     def test_game_page_for_responding(self):
@@ -52,9 +56,10 @@ class TestIntegrations(unittest.TestCase):
         Checks if processing data as required and if the correct riddle is being displayed
         """
         with app.app_context():
-            resp = self.app.post('/game/test/1/0', data=dict(answer="yes", score_getter="4"))
-            self.assertEqual(resp.location, url_for('game', username='test', level='2', score='4', _external=True))
-        
+            resp = self.app.post("/game/test/1/1", data=dict(answer='yes', score_getter='3'))
+            self.assertEqual(resp._status_code, 302)
+            print(resp.location)
+            
         
     def test_game_over(self):
         """
