@@ -8,6 +8,9 @@ app = Flask(__name__)
 app.secret_key = "az#5t];a5g,dfnmk34;322bum"
 
 def count_highest(username):
+    """
+    Sums points scored by user 
+    """
     highest = 0
     try:
         if session[username]:
@@ -23,7 +26,6 @@ def count_highest(username):
 def index():
     """
     Welcome page with a form to send username and start game.
-    Function also checks for username in banned_users.txt.
     """
     
     if request.method == "POST":
@@ -31,7 +33,7 @@ def index():
             
             return redirect(url_for('user', username=request.form["username"]))
         else:
-            flash('Username has to be longer than 3 characters!')
+            flash('Username has to be longer than 4 characters!')
             redirect(url_for('index'))
     return render_template('index.html')
     
@@ -46,7 +48,6 @@ def user(username):
         session[username] = {}
         session.modified = True
         return redirect(url_for('game', username=username, level=level, score=score))
-        
     return render_template('user.html', username = username)
     
 
@@ -82,21 +83,21 @@ def game(username, level, score=0):
             session.modified = True
             if int(level) < len(riddle_data):
                 """If the level value is still smaller or same as the number of riddle objects - if there are still 
-                any riddles to answer - then we get another view with the next riddle. Otherwise, gets back to user view with leaderboard"""
+                any riddles to answer - then we get another view with the next riddle. Otherwise, redirects user to 'game_over' view."""
                     
                 new_level = str(int(level) + 1)
-                return redirect(url_for('game', username=username, level=new_level, score=new_score)) # score = new_score
+                # refresh with new score value
+                return redirect(url_for('game', username=username, level=new_level, score=new_score)) 
             else:
-                # redirect to the game_over view with leaderboard
-                return redirect(url_for('game_over', username=username, score=new_score)) # score = score
+                # redirect to the game_over view with new score
+                return redirect(url_for('game_over', username=username, score=new_score))
         else:
             if request.form["answer"] == "":
-                return redirect(url_for('game', username=username, level=level, score=score)) #score = score
+                return redirect(url_for('game', username=username, level=level, score=score))
             else:
-                # if answer is incor refresh with 
-                flash("Oops! Wrong! The answer is not {}".format(request.form["answer"]))
-                return redirect(url_for('game', username=username, level=level, score=score)) #score = score
-                
+                # if answer is incorrect refresh with 
+                flash("Oops! Wrong answer.")
+                return redirect(url_for('game', username=username, level=level, score=score))
     return render_template('game.html',
     riddle_text = rlist[0],
     riddle_image= rlist[2],
@@ -114,7 +115,6 @@ def game_over(username, score):
     Also passes overall score stored in session to the template.
   
     """
-    # puts data into dictionary
     if int(score) != count_highest(username):
         return redirect(url_for('cheating_prevent', username=username))
     data = {}
@@ -178,7 +178,7 @@ def cheating_prevent(username):
 @app.route('/restart/<username>')
 def restart(username):
     """
-    Session cleaning function
+    Session cleaning function, which may be useful if another user uses same username
     """
     try:
         session.pop(username)
@@ -191,7 +191,7 @@ def restart(username):
 @app.errorhandler(500)
 def page_gone(self):
     """
-    View displaying custom error page
+    View displaying custom error page informing user that session has expired
     """
     return render_template('error.html')
     
