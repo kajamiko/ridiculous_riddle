@@ -91,7 +91,7 @@ The back end has been tested thoroughly using unitttest. I have tested views to 
 - templates used, however not straightforward in flask without installing some libraries, was checked by testing 'response.data' (asserting some strings typical to the exected template)
 - following changes in files, when expected ('leaderboard' view)
 
-However, after adding session to avoid cheating on scoring, my automated tests are not working anymore, probably due to bad configuring. I could not find solution for this problem.
+However, after adding session to avoid cheating on scoring, my automated tests for some views are not working anymore, probably due to bad configuring. I could not find solution for this problem.
 For all views accessing session, I can only provide manual tests scenarios.
 Therefore, I kept all the working code with no session functionality and with a full test file, on 'older_tested' branch. All the automated tests can only be run on this branch.
 
@@ -147,11 +147,7 @@ Note: all of the views, that cannot be tested automatically, rely heavily on ses
 4. 'Restart' view:
     1. When hitting 'Restart' button, the session will be cleared.
 
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
-
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
-
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
+The project has been tested on various browsers, including Chrome, Edge, Opera, and Safari. 
 
 ## Deployment
 
@@ -171,8 +167,8 @@ In addition, if it is not obvious, you should also describe how to run your code
 - All Python questions used in application are copied from [Python Prograzmiz Quizes](https://www.programiz.com/python-programming/quiz).
 
 ### Media
-- The photos used in this site were obtained from [Pixabay](https://pixabay.com/)
+- The photos used in this site were obtained from [Pixabay](https://pixabay.com/).
+- Icons used in the project were obtained from [Font Awesome](https://fontawesome.com/icons).
+- The favicon was obtained from [Flaticon.com](https://www.flaticon.com/).
 
 ### Acknowledgements
-
-- I received inspiration for this project from X
