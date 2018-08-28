@@ -49,7 +49,7 @@
 </div>
   </div>
   <div class="col-sm-10 col-md-6">
-  <img class="img-fluid img-thumbnail ml-3" style="width:500px"src="{{ riddle_image }}" alt="Riddle image">
+  <img class="img-fluid img-thumbnail ml-3" style="width:500px"src="{{ url_for('static', filename=riddle_image) }}" alt="Riddle image">
   </div>
 </div>
   {% if level in session[username] %}
@@ -57,7 +57,7 @@
           {% if level|int>1 %}
           <a class="btn btn-outline-success" href="{{ url_for('game', username=username, level=level|int-1, score=score)}}">Back</a>
           {% endif %}
-          {% if level|int < 3 %}
+          {% if level|int < 10 %}
           <a class="btn btn-outline-warning" href="{{ url_for('game', username=username, level=level|int+1, score=score)}}">Forward</a>
           {% else %}
           <a class="btn btn-outline-warning" href="{{ url_for('game_over', username=username, score=score)}}">Your certificate</a>

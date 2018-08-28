@@ -1,20 +1,61 @@
 [{
     "riddle": "Are tuples in Python 3 immutable?",
-    "img_source": "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738",
+    "img_source": "img/advise-answer-arrow-208494.jpg",
     "answer": "Yes",
     "level": "1"
 },
 {
-    "riddle": "Suppose a list with name test, contains 10 elements. You can get the 5th element from the test list using:",
-    "img_source": "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738",
-    "answer": "test[4]",
+    "riddle": "Can return statement in python used to return multiple values ?",
+    "img_source": "img/tim-gouw-68319-unsplash.jpg",
+    "answer": "Yes",
     "level": "2"
 },
 {
     "riddle": "What template engine is used by Flask?",
-    "img_source": "",
+    "img_source": "img/flask.svg",
     "answer": "jinja",
     "level": "3"  
+},
+{
+    "riddle": "Are string objects mutable ?",
+    "img_source": "img/stock-photo-python-on-word-on-screen-binary-code-display-d-illustration-684957946.jpg",
+    "answer": "No",
+    "level": "4"  
+},
+{
+    "riddle": "A variable must be assigned a value before it can be used.",
+    "img_source": "img/digital-1742687_1280.jpg",
+    "answer": "Yes",
+    "level": "5"  
+},
+{
+    "riddle": "Is python compiled language ?",
+    "img_source": "img/tim-gouw-68319-unsplash.jpg",
+    "answer": "No",
+    "level": "6"  
+},
+{
+    "riddle": "What Flask function is used to throw error?",
+    "img_source": "img/error-2129569_1280.jpg",
+    "answer": "abort()",
+    "level": "7"  
+},
+{
+    "riddle": "Is there a 'do while' loop in python ?",
+    "img_source": "img/coding-924920_1280.jpg",
+    "answer": "no",
+    "level": "8"  
+},
+{
+    "riddle": "Is it true that Python do not have any data type for characters?",
+    "img_source": "img/adwords-793034_1280.jpg",
+    "answer": "Yes",
+    "level": "9"  
+},
+{
+    "riddle": "In python we use try and catch for exception handling ?",
+    "img_source": "img/error-2215702_1280.png",
+    "answer": "no",
+    "level": "10"  
 }
-
 ]

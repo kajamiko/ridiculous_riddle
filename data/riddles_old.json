@@ -1,0 +1,20 @@
+[{
+    "riddle": "Are tuples in Python 3 immutable?",
+    "img_source": "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738",
+    "answer": "Yes",
+    "level": "1"
+},
+{
+    "riddle": "Suppose a list with name test, contains 10 elements. You can get the 5th element from the test list using:",
+    "img_source": "https://tctechcrunch2011.files.wordpress.com/2015/04/codecode.jpg?w=738",
+    "answer": "test[4]",
+    "level": "2"
+},
+{
+    "riddle": "What template engine is used by Flask?",
+    "img_source": "",
+    "answer": "jinja",
+    "level": "3"  
+}
+
+]

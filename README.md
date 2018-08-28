@@ -171,4 +171,5 @@ In addition, if it is not obvious, you should also describe how to run your code
 - Icons used in the project were obtained from [Font Awesome](https://fontawesome.com/icons).
 - The favicon was obtained from [Flaticon.com](https://www.flaticon.com/).
 
+#### All image files are stored in static/media.
 ### Acknowledgements
