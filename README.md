@@ -60,7 +60,6 @@ There was also a possibility of putting username on a banned users list, but it 
 
 ## Technologies Used
 
-In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
 - HTML and CSS
     - project uses **HTML** and **CSS** to build webpages.
@@ -151,15 +150,14 @@ The project has been tested on various browsers, including Chrome, Edge, Opera, 
 
 ## Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+The application is deplyed on [Ridiculous-Riddle](http://ridiculous-riddle-quiz.herokuapp.com/).
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
+In order to deploy, I have made following changes:
+- Set 'debug' value in run.py file to False
+- Added requirements.txt and Procfile, as required by heroku
+- Set Heroku Config Vars:
+    - IP to 0.0.0.0
+    - PORT to 5000
 
 ## Credits
 
@@ -172,4 +170,5 @@ In addition, if it is not obvious, you should also describe how to run your code
 - The favicon was obtained from [Flaticon.com](https://www.flaticon.com/).
 
 #### All image files are stored in static/media.
+
 ### Acknowledgements
