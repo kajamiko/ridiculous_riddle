@@ -96,7 +96,9 @@ def game(username, level, score=0):
                 return redirect(url_for('game', username=username, level=level, score=score))
             else:
                 # if answer is incorrect refresh with 
-                flash("Oops! Wrong answer.")
+                session[username].setdefault(level, "0")
+                session.modified = True
+                flash("Oops! Wrong. The right answer is: {0}".format(rlist[1]))
                 return redirect(url_for('game', username=username, level=level, score=score))
     return render_template('game.html',
     riddle_text = rlist[0],

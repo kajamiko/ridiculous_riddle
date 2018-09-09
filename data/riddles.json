@@ -35,7 +35,7 @@
     "level": "6"  
 },
 {
-    "riddle": "What Flask function is used to throw error?",
+    "riddle": "What Flask function is used to throw error, like 404?",
     "img_source": "img/error-2129569_1280.jpg",
     "answer": "abort()",
     "level": "7"  
