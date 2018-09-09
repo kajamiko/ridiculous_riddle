@@ -165,6 +165,8 @@ In order to deploy, I have made following changes:
 
 ## Credits
 
+The navbar and index page design is a modified Bootstrap template [Landing Page](https://startbootstrap.com/template-overviews/landing-page/).
+
 ### Content
 - All Python questions used in application are copied from [Python Prograzmiz Quizes](https://www.programiz.com/python-programming/quiz).
 
@@ -176,3 +178,4 @@ In order to deploy, I have made following changes:
 #### All image files are stored in static/media.
 
 ### Acknowledgements
+
