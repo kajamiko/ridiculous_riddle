@@ -39,6 +39,7 @@ Error page may happen to be displayed, as the app's functionality relies on sess
 
 3. Game [python part] - is reading proper question from file ('static/data/riddles.json'). It puts the data ( question, answer, image source and level number) into a python list, that is later passed to a template to parse.
 After user submits answer, it is checking if it's correct.
+
 The function is also processing initial score, and adding new points that are posted along with the answer. Points earned for each level are stored in session. If points argument doesn't match expectations, it redirects to another view.
 If there is no more questions left in the riddles.json file, page is redirected to the 'game_over' function.
 
