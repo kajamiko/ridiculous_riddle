@@ -145,7 +145,13 @@ def game_over(username, score):
                
             with open('data/leaderboard.json', 'w') as outfile:
                 json.dump(data, outfile)
-    scoring = OrderedDict(sorted(session[username].items()))
+    def sort_my_dict(example):
+        temp = {}
+        for k,v in example.items():
+             temp[int(k)] = v
+        example = OrderedDict(sorted(temp.items()))
+        return example
+    scoring = sort_my_dict(session[username])
     return render_template('game_over.html', username=username, score=score, scoring=scoring)
     
 @app.route('/leaderboard', methods=["GET"])  
