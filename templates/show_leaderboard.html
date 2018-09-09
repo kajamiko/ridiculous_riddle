@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
 <div class="container my-3">
     <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
         <h2 class="rr">Leaderboard</h2>
@@ -13,10 +12,10 @@
         </tr>
         </thead>
     {% for name, points in leaderboard.items() %}
-    <tr>
-    <td class="col-sm-6">{{ name }} </td>
-    <td class="col-sm-6"> {{ points }}</td>
-    </tr>
+        <tr>
+        <td class="col-sm-6">{{ name }} </td>
+        <td class="col-sm-6"> {{ points }}</td>
+        </tr>
     {% endfor %}
     </table>
     </div>

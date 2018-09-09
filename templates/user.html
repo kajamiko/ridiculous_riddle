@@ -3,7 +3,6 @@
   <div class="row align-items-center justify-content-around">
   <div class="tiny-con col-md-6 col-xs-12"><h2 class="titles aligned-box">Hello <b>{{ username }}</b>!<br>Let the game begins...</h2>
   <div>
-    
     <p class="rr"> Now, you'll get a set of 10 questions to answer. 
     Your time to answer is unlimited, however, if you wish to get more points,
     try to do so in 10 seconds. The progress bar at the top of the page will countdown to 0.
@@ -14,25 +13,21 @@
     <form method="POST">
     <div class="form-inline">
         <button type="submit" class="btn btn-block btn-lg btn-success">Start!</button>
-      
     </div>
   </form>
-  
   </div>
   <div class="col-md-5 col-xs-12 tiny-con"><img class="img-fluid img-thumbnail" width="400px" src="../static/img/kento-iemoto-625983-unsplash.jpg"></img></div>
   </div>
-
 <div class="titles aligned-box">
-
   {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
 </div>
 
 {% endblock %}
