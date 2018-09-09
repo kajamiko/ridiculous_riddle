@@ -92,9 +92,7 @@ def game(username, level, score=0):
                 # redirect to the game_over view with new score
                 return redirect(url_for('game_over', username=username, score=new_score))
         else:
-            if request.form["answer"] == "":
-                return redirect(url_for('game', username=username, level=level, score=score))
-            else:
+            
                 # if answer is incorrect refresh with 
                 session[username].setdefault(level, "0")
                 session.modified = True

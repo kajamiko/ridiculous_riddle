@@ -59,6 +59,10 @@ If there is no more questions left in the riddles.json file, page is redirected 
 
 There was also a possibility of putting username on a banned users list, but it was impractical.
 
+### Features Left to Implement
+
+I would like to implement custom themes to choose from.
+
 ## Technologies Used
 
 
@@ -121,15 +125,14 @@ Deployed verrsion (the one with session functionality) of the app is on master b
     - `test_cheating_prevention(self)` - GET request tested for status code and template. Returns None
 
 All tests can be found in test.py file.
-Note: all of the views, that cannot be tested automatically, rely heavily on session. Please see next section
+Note: all of the views, that cannot be tested automatically, rely heavily on session. Please see next section.
 
 ### Manual tests for deployed version:
 1. 'Game' view:
     1. After submitting username and starting the actual game, the game page will load. Please verify that overall score at the top of the page is currently 0.
     2. The progress bar and info right under will show how many points will be scored if answer is submitted .
-    3. Try to type an incorrect answer to a question displayed and submit it, to verify that the page will be reloaded with wrong answer message. If that is not a first
-        question, please note that no points were added for the answer.
-    4. Try to submit nothing - it should do the same as above.
+    3. Try to type an incorrect answer to a question displayed and submit it, to verify that the page will be reloaded with information about what the right answer is. No points will be scored for that level, you cannot re-submit, and you may hit "Forward" button to see next question.
+    4. Try to submit nothing - it should do the same as above. 
     5. Try to submit a right answer. New question should appear and points should be added to the overall score displayed at the top of the page.
     6. When all the answers has been submitted, the page should be redirected to the 'game_over' view.
 
@@ -142,7 +145,7 @@ Note: all of the views, that cannot be tested automatically, rely heavily on ses
 
 3. 'Cheating_prevent' view:
     1. At any point of the game, either when question is loaded, or the game finished already, try to access question by typing too large value into the browser bar.Verify 
-        that a page with a sleeping cat image will be displayed and you'll be offered to resume thee game with correct score.
+        that a page with a sleeping cat image will be displayed and you'll be offered to resume the game with correct score.
     
 4. 'Restart' view:
     1. When hitting 'Restart' button, the session will be cleared.
